@@ -13,4 +13,4 @@ You can download brock.min.js from here:
 `let data = brock.garyToJSON(gary);`
 
 ## Progress
-Just initialized the project. Not much progress yet.
+Just initialized the project. Not any progress yet.
