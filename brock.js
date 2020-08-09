@@ -39,16 +39,18 @@ function BROCK() {
           }
           break;
         default:
-          if (mc != 'comment') throw ("BrockError at char'," + i);
+          if (mc != 'comment') throw `BrockError: cannot parse char ${i}`;
         case ' ':
         case '\n':
           break;
       }
       lc = c;
     }
+    // return 'not ready yet';
     return p;
   }
   garyToJSON = (gary) => {
     // TODO
+    return;
   }
 }
