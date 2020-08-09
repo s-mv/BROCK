@@ -31,7 +31,7 @@ function BROCK() {
     }
     return;
   }
-  this.parseGary = (gary) => {
+  this.parseGary = (gary = '') => {
     let p;
     for (let i = 0; i < gary.length; i++) {
       const c = gary[i];
