@@ -7,32 +7,44 @@
 */
 
 function BROCK() {
-  function parseGaryArray(gary = '') {
-    if (gary[0] != '[') return;
-    let arr = gary.split(/[\[\],]/gi).join('');
-    console.log(arr);
-    for (let i = 0; i < arr.length; i++) {
-      const c = arr[i];
-      
+  function parseGaryLiteral(gary = '', type = '"') {
+    console.log(gary);
+    for (let i = 0; i < gary.length; i++) {
+      const c = gary[i];
+      if (c.match(/[ -!]/gi)) return;
+      if (c == type) {
+        return gary.substring(1, i);
+      }
     }
+  }
+  function parseGaryArray(gary = '') {
+    let p;
+    let arr = gary.split(/[\,[\]]/gi);
+    for (let i = 1; i < arr.length; i++) {
+      const c = arr[i];
+      if (c == ' ') continue;
+      if (c.match(/[\"\'\*\^\&\%]/gi)) {
+        let array = parseGaryLiteral(gary.substring(i), c);
+        console.log(array);
+        if (!array) throw `BlockError: ${c} at char ${i} not closed.`;
+      }
+    }
+    return;
   }
   this.parseGary = (gary) => {
     let p;
     for (let i = 0; i < gary.length; i++) {
       const c = gary[i];
       switch (c) {
+        case ' ':
+          continue;
         case '[':
-          let k = i;
           let done;
-          for (let j = i + 1; j < gary.length; j++) {
-            const c2 = gary[j];
-            i++;
-            if(c2 == ']') {
-              let array = parseGaryArray(gary);  
-              done = true;
-            }
+          let array = parseGaryArray(gary.substring(i));
+          if (array) {
+            done = true;
           }
-          if(!done) throw `BrockError: [ at ${k} not closed`;
+          if (!done) throw `BrockError: [ at ${i} not closed.`;
           break;
         default:
           break;
